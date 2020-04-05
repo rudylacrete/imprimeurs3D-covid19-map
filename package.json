@@ -27,6 +27,7 @@
     "gatsby-plugin-material-ui": "^1.2.4",
     "gatsby-plugin-offline": "^2.0.25",
     "gatsby-plugin-react-helmet": "^3.2.1",
+    "gatsby-plugin-react-leaflet": "^2.0.12",
     "gatsby-plugin-sharp": "^2.0.32",
     "gatsby-plugin-tslint": "0.0.2",
     "gatsby-plugin-typescript": "^2.0.9",
