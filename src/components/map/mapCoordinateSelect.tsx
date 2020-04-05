@@ -1,15 +1,9 @@
 import * as React from 'react'
 import { Map as Leaflet, TileLayer, Marker, Popup} from 'react-leaflet'
-import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'react-leaflet-markercluster/dist/styles.min.css'
 
 const mapPosition = [-21.1419936, 55.5502665]
-
-const icon = new Icon({
-  iconUrl: "/map_icon.svg",
-  iconSize: [24, 32]
-});
 
 interface IMap {
   onCoordinateChange: Function,
@@ -46,7 +40,6 @@ const MapCoordinateSelect = (props: IMap) => {
         {coordinates && 
           <Marker
             position={[coordinates.lat, coordinates.lng]}
-            icon={icon}
             draggable={true}
             onDragend={handleMarkerMove}
           />

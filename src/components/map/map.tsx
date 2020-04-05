@@ -1,15 +1,9 @@
 import * as React from 'react'
 import { Map as Leaflet, TileLayer, Marker, Popup} from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
-import { Icon } from 'leaflet'
 import { withFirebase, IFirebaseContext } from '../FirebaseContext'
 
 const mapPosition = [-21.1419936, 55.5502665]
-
-const icon = new Icon({
-  iconUrl: "/map_icon.svg",
-  iconSize: [24, 32]
-});
 
 interface IMap extends IFirebaseContext {
   setMakerId?: Function,
@@ -81,7 +75,6 @@ class Map extends React.Component<IMap, IState> {
                 <Marker 
                   key={marker.id}
                   position={[marker.lat, marker.lng]}
-                  icon={icon}
                   onclick={() => this.handleMarkerClick(marker.id)}
                 >
                   <Popup>
