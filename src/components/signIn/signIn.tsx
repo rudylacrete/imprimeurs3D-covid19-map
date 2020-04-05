@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { StyledFirebaseAuth } from 'react-firebaseui'
 import { IFirebaseContext, withFirebase } from "../FirebaseContext"
-import { uiConfig } from '../../firebase'
+import { getUiConfig } from '../../firebase'
 
 const signIn = (props: IFirebaseContext) => (
   <StyledFirebaseAuth
-    uiConfig={uiConfig}
+    uiConfig={getUiConfig(props.firebase)}
     firebaseAuth={props.firebase.auth()}
   />
 )

@@ -30,25 +30,28 @@ const MapCoordinateSelect = (props: IMap) => {
     props.onCoordinateChange(newCoordinates)
   }
   
-  return <Leaflet 
-    center={mapPosition}
-    zoom={10}
-    className={"map"}
-    style={{height: `300px`}}
-    onClick={handleMapClick}
+  return (
+    <Leaflet 
+      center={mapPosition}
+      zoom={10}
+      className={"map"}
+      style={{height: `300px`}}
+      onClick={handleMapClick}
     >
       <TileLayer
-      attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {coordinates && 
-        <Marker position={[coordinates.lat, coordinates.lng]}
+        <Marker
+          position={[coordinates.lat, coordinates.lng]}
           icon={icon}
           draggable={true}
           onDragend={handleMarkerMove}
         />
       }
-  </Leaflet>
+    </Leaflet>
+  )
 }
 
 export default MapCoordinateSelect

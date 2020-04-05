@@ -1,30 +1,29 @@
-import * as firebaseApp from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/database'
-import 'firebase/firestore'
-
 const config = {
-/* firebase conf here */
+/* firebase settings here */
 }
 
 let firebaseCache
 
-export const uiConfig = {
+export const getUiConfig = firebaseApp => ({
   signInFlow: 'popup',
   signInOptions: [
     firebaseApp.auth.GoogleAuthProvider.PROVIDER_ID,
     firebaseApp.auth.EmailAuthProvider.PROVIDER_ID,
   ],
-}
+})
 
-const getFirebase = () => {
-  if (firebaseCache) {
-    return firebaseCache
+const getFirebase = firebaseApp => {
+  if (typeof window !== 'undefined') {
+    if (firebaseCache) {
+      return firebaseCache
+    }
+
+    firebaseApp.initializeApp(config)
+    firebaseCache = firebaseApp
+    return firebaseApp
   }
 
-  firebaseApp.initializeApp(config)
-  firebaseCache = firebaseApp
-  return firebaseApp
+  return null;
 }
 
 export default getFirebase

@@ -37,8 +37,10 @@ class Map extends React.Component<IMap, IState> {
     }
   }
   
-  async componentDidMount() {
+  async fetchMarkers() {
     const { firebase } = this.props
+    // firebase can not be initialized yet
+    if(!firebase) return
     const markers = []
     const snapshot = await firebase
       .firestore()
@@ -51,33 +53,47 @@ class Map extends React.Component<IMap, IState> {
       markers
     })
   }
+
+  componentDidMount() {
+    this.fetchMarkers()
+  }
   
+  componentDidUpdate(prevProps) {
+    if(prevProps.firebase == null && this.props.firebase) {
+      this.fetchMarkers()
+    }
+  }
+
   handleMarkerClick(makerId) {
     if(this.props.setMakerId)
       this.props.setMakerId(makerId)
   }
-  
+
   render() {
-    return <Leaflet center={mapPosition} zoom={11} className={"map"} style={{height: `90vh`}}>
-    <TileLayer
-    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    <MarkerClusterGroup>
-    {this.state.markers.map(marker => {
-      return <Marker 
-      key={marker.id}
-      position={[marker.lat, marker.lng]}
-      icon={icon}
-      onclick={this.handleMarkerClick.bind(null, marker.id)}
-      >
-      <Popup>
-      {marker.name}
-      </Popup>
-      </Marker>
-    })}
-    </MarkerClusterGroup>
-    </Leaflet>
+    return (
+      <Leaflet center={mapPosition} zoom={11} className={"map"} style={{height: `90vh`}}>
+        <TileLayer
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <MarkerClusterGroup>
+          {this.state.markers.map(marker => {
+            return (
+              <Marker 
+                key={marker.id}
+                position={[marker.lat, marker.lng]}
+                icon={icon}
+                onclick={() => this.handleMarkerClick(marker.id)}
+              >
+                <Popup>
+                  {marker.name}
+                </Popup>
+              </Marker>
+            )
+          })}
+        </MarkerClusterGroup>
+      </Leaflet>
+    )
   }
 }
 

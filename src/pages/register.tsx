@@ -26,12 +26,9 @@ const ContentArea = withFirebase(({firebase}: IFirebaseContext) => {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [submitResult, setSubmitResult] = React.useState(null)
 
-  let firstCall = true
   const ensureNotRegisteredOnMap = async () => {
-    // prevent to call again firebase because this hook
-    // will also be called anytime react update the component DOM
-    if(!firstCall) return;
-    firstCall = false
+    // firebase can be null if not yet initialized
+    if(!firebase) return;
     const userUid = firebase.auth().currentUser.uid
     const snapshot = await firebase
       .firestore()
@@ -44,7 +41,7 @@ const ContentArea = withFirebase(({firebase}: IFirebaseContext) => {
   React.useEffect(() => {
     // we can't move the code here because react don't want us to return a promise
     ensureNotRegisteredOnMap()
-  })
+  }, [firebase])
 
   const coordinateChange = (newCoordinates) => {
     setCoordinates(newCoordinates)
@@ -91,11 +88,14 @@ const ContentArea = withFirebase(({firebase}: IFirebaseContext) => {
     const handleRedirect = () => {
       navigate('/')
     }
+
+    const openDialog = isSubmitting || submitResult != null
   
-    return <Dialog
-        open={isSubmitting || submitResult != null}
+    return (
+      <Dialog
+        open={openDialog}
         TransitionComponent={Transition}
-        keepMounted
+        keepMounted={true}
         disableBackdropClick={!submitResult}
         disableEscapeKeyDown={!submitResult}
         aria-labelledby="alert-dialog-slide-title"
@@ -113,36 +113,40 @@ const ContentArea = withFirebase(({firebase}: IFirebaseContext) => {
           </Button>
         </DialogActions>
       </Dialog>
+    )
   }
 
   if(!ready) {
     return <div style={{textAlign: "center"}}>Loading ...</div>
   } else {
-    return <div>
-      <h1
-        style={{
-          marginBottom: 30,
-          marginTop: 0,
-          marginLeft: 30,
-          marginRight: 30,
-          textAlign: "center",
-        }}
-      >
-        S'enregistrer
-      </h1>
-      {isAlreadyRegistered ?
-        <div>Désolé vous avez déjà enregistré un point sur cette carte!</div>
-      :
-        <div>
-          <form onSubmit={handleSubmit}>
-            <TextField required={true} name="name" label="Nom" helperText="Nom affiché sur la carte (min. 3 car)" onChange={nameChange}/>
-            <MapCoordinateSelect onCoordinateChange={coordinateChange} />
-            <Button type="submit" disabled={coordinates === null || name.length < 3 || isSubmitting}>Submit</Button>
-          </form>
-          <MyDialog />
-        </div>
-      }
-    </div>
+    const disableSubmit = coordinates === null || name.length < 3 || isSubmitting
+    return (
+      <div>
+        <h1
+          style={{
+            marginBottom: 30,
+            marginTop: 0,
+            marginLeft: 30,
+            marginRight: 30,
+            textAlign: "center",
+          }}
+        >
+          S'enregistrer
+        </h1>
+        {isAlreadyRegistered ?
+          <div>Désolé vous avez déjà enregistré un point sur cette carte!</div>
+        :
+          <div>
+            <form onSubmit={handleSubmit}>
+              <TextField required={true} name="name" label="Nom" helperText="Nom affiché sur la carte (min. 3 car)" onChange={nameChange}/>
+              <MapCoordinateSelect onCoordinateChange={coordinateChange} />
+              <Button type="submit" disabled={disableSubmit}>Submit</Button>
+            </form>
+            <MyDialog />
+          </div>
+        }
+      </div>
+    )
   }
 })
 
@@ -150,18 +154,20 @@ const HeaderArea = withFirebase(({firebase, authenticated}) => {
   const goHome = () => navigate('/')
   const logout = () => firebase.auth().signOut()
 
-  return <>
-    <HomeButton onClickHandler={goHome} />
-    {authenticated && <LogoutButton onClickHandler={logout} index={1} />}
-  </>
+  return (
+    <>
+      <HomeButton onClickHandler={goHome} />
+      {authenticated && <LogoutButton onClickHandler={logout} index={1} />}
+    </>
+  )
 })
 
 const RegisterForm = () => (
     <>
     <Helmet>
         <meta charSet="utf-8" />
-        <title>S'enregistrer</title>
-        <link rel="canonical" href="http://imprimeurs3d-map.rudylacrete.fr" />
+        <title>Imprimeurs 3D du 974 - S'enregistrer</title>
+        <link rel="canonical" href="https://imprimeurs3d-map.rudylacrete.fr" />
       </Helmet>
       <AuthContext>
         <div
