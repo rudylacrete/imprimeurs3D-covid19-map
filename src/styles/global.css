@@ -17,3 +17,8 @@ html {
 :not(pre)>code[class*="language-"] {
     font-size: 18px;
 }
+
+.map {
+    width: 100%;
+    margin-top: 10px;
+}

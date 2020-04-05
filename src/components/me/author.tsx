@@ -6,14 +6,16 @@ import Grid from "@material-ui/core/Grid"
 import THEME from "../../theme"
 
 interface IProps {
+  title: string,
   author: {
     name: string
     image: string
     biography: string
-  }
+  },
+  about: string
 }
 
-export default ({ author }: IProps) => {
+export default ({ title, author, about }: IProps) => {
   return (
     <Grid
       container={true}
@@ -40,7 +42,7 @@ export default ({ author }: IProps) => {
           marginBottom: 20,
         }}
       >
-        {author.name}
+        {title}
       </h1>
       <p
         style={{
@@ -52,7 +54,7 @@ export default ({ author }: IProps) => {
           textAlign: "center",
         }}
       >
-        {author.biography}
+        {about}
       </p>
     </Grid>
   )

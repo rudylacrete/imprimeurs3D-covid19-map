@@ -1,28 +1,19 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Haezl`,
+    title: `Imprimeurs 3D solidaires du 974`,
     author: {
-      name: "gatsby starter haezl",
-      image: "/img/me.png",
-      biography: "A lightweight, mobile first blog starter with infinite scroll \
-        and Material-UI design elements for Gatsby.",
+      name: "Rudylacrete",
+      image: "/img/logoRun.png",
+      biography: "Ingénieur informatique et passionné de technologies.",
     },
     // for a list of supported networks take a look at https://jaketrent.github.io/react-social-icons/
     networks: [
-      "https://twitter.com/iamhaezl",
-      "https://github.com/haezl/gatsby-starter-haezl",
-      "mailto:mail@haezl.at",
+      "https://www.linkedin.com/in/rudy-grondin",
+      "https://github.com/rudylacrete",
+      "mailto:rudylacrete@gmail.com",
     ],
-    about: '<p>A lightweight, mobile first blog starter with infinite scroll \
-    and Material-UI design elements for \
-    <a href="https://github.com/gatsbyjs/gatsby" target="_blank">Gatsby</a>. </p> \
-    <p>For a quick start with this starter checkout the \
-    <a href="/posts/get-started/get-started/">Get Started</a> guide. For \
-    an overview of plugins used in this starter have a look at \
-    <a href="/posts/gatsby-plugins/gatsby-plugins/">Plugins</a>. \
-    To see a markdown blog entry in action click \
-    <a href="/posts/markdown/markdown-test/">here</a>. \
-    </p> \
+    about: 'Cette application a pour objectif de recenser et visualiser la communauté \
+    des makers solidaires à la Réunion. Nous verrons quelle région est la plus représentée :) \
     ',
   },
   plugins: [
@@ -69,13 +60,13 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        name: "gatsby-starter-haezl",
-        short_name: "haezl",
+        name: "imprimeurs3d-974",
+        short_name: "imp974",
         start_url: "/",
         background_color: "#eeeeee",
         theme_color: "#0c9ed1",
         display: "standalone",
-        icon: "static/img/me.png",
+        icon: "static/img/logoRun.png",
         include_favicon: true,
       },
     },
@@ -103,16 +94,7 @@ module.exports = {
         ],
       },
     },
-    "gatsby-transformer-sharp",
-    "gatsby-plugin-sharp",
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        theme: {
-          primaryColor: "#0c9ed1",
-        },
-      },
-    },
+    "gatsby-plugin-react-helmet"
   ],
   pathPrefix: "/img",
 }

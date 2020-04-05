@@ -29,7 +29,7 @@ const THEME = {
       color: "white",
       borderColor: "white",
       backgroundColor: "none",
-      width: 100,
+      width: 150,
     },
   },
   author: {
