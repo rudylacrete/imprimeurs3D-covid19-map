@@ -167,7 +167,7 @@ const RegisterForm = () => (
     <Helmet>
         <meta charSet="utf-8" />
         <title>Imprimeurs 3D du 974 - S'enregistrer</title>
-        <link rel="canonical" href="https://imprimeurs3d-map.rudylacrete.fr" />
+        <link rel="canonical" href="https://imprimeurs3d-covid19-map.rudylacrete.fr" />
       </Helmet>
       <AuthContext>
         <div

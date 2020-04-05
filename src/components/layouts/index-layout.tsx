@@ -118,7 +118,7 @@ export default ({ children, requireAuth = false }: ILayoutProps) => (
         <Helmet>
           <meta charSet="utf-8" />
           <title>{data.site.siteMetadata.title}</title>
-          <link rel="canonical" href="https://imprimeurs3d-map.rudylacrete.fr" />
+          <link rel="canonical" href="https://imprimeurs3d-covid19-map.rudylacrete.fr" />
         </Helmet>
         <AuthContext>
           <Default>
